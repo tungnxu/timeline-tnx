@@ -1,0 +1,16 @@
+<div class="rounded overflow-hidden shadow-md mb-5">
+    <div class="px-6 py-4">
+      <div class="flex justify-between items-center">
+          <p class="text-gray-500 text-sm"><i class="la la-clock-o"></i> 12h:30 - 20/10/2019</p>
+          <a class="inline-block text-gray-600  no-underline hover:border  py-2 px-4" [routerLink]="['/post/1']" >Edit Post</a>
+      </div>
+     
+      
+      <p class="text-gray-800 text-base flex flex-wrap py-2">
+        <img class="max-w-xs" [src]="item.thumb" alt="" *ngFor="let item of postData?.images" style="    margin: 5px;
+        width: 150px;
+        flex-basis: 150px;
+        flex-grow: 1;"> 
+      </p>
+    </div>
+  </div>

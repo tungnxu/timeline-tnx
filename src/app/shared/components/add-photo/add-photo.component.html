@@ -1,0 +1,47 @@
+<div class="image-container">
+    <ng-container *ngIf="!selectedImages || selectedImages?.length == 0">
+        <div class="upload-image text-center  p-3 border hover:bg-gray-200 my-2 cursor-pointer" (click)="openModal('custom-modal-1')">
+            <p>Upload Photo</p>
+            <i class="la la-image"></i>
+        </div>
+        <p class="text-gray-600 text-xs">Formats: JPG, JPEG, PNG</p>
+        <p class="text-gray-600 text-xs">File size: Up to 10MB</p>
+    </ng-container>
+    <ng-container *ngIf="selectedImages?.length > 0">
+        <div class="selected-images flex flex-nowrap">
+            <div class="image-wrapper w-20 p-1 relative" *ngFor="let item of selectedImages; index as i">
+                <img [src]="item?.thumb" alt="">
+                <button class="absolute z-0 top-0 right-0 bg-gray-200 hover:bg-black hover:text-white" (click)="removeImage(i)"><i class="la la-close"></i></button>
+            </div>
+        </div>
+        </ng-container>
+</div>
+
+<app-modal-template id="custom-modal-1">
+    <div class="header flex justify-between items-center border-b p-3">
+        <h1>Upload Photo</h1>
+        <button (click)="closeModal('custom-modal-1');"><i class="la la-close"></i></button>
+    </div>
+    <div class="body  p-3 border-b">
+        <div class="upload-content w-full bg-gray-200 h-64 flex justify-center items-center my-2">
+            <div class="text-center">
+                <p class="text-gray-600">Drop your image here</p>
+                <p class="text-gray-600">OR</p>
+                <p class="my-2">
+                    <label for="file-upload" class="cursor-pointer custom-file-upload bg-white hover:bg-gray-100 text-gray-800  py-1  px-4 border border-gray-400 rounded">
+                        <i class="fa fa-cloud-upload"></i> Browse
+                    </label>
+                    <input id="file-upload" accept=".jpg,.jpeg,.png" onclick="this.value=null;" type="file" (change)="onSelectFile($event)" multiple [hidden]="true"/>
+                </p>
+                <p>{{error}}</p>
+            </div>
+        </div>
+        <p class="text-gray-600 text-xs">Formats: JPG, JPEG, PNG</p>
+        <p class="text-gray-600 text-xs">File size: Up to 10MB</p>
+    </div>
+    <div class="footer text-center py-2">
+        <button class="bg-gray-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            (click)="closeModal('custom-modal-1');">Cancel</button>
+    </div>
+    <!-- <p>Home page text: <input type="text" [(ngModel)]="bodyText" /></p> -->
+</app-modal-template>

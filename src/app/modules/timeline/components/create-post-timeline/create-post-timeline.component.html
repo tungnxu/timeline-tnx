@@ -1,0 +1,59 @@
+<h4 class="text-lg uppercase py-5 font-bold"> {{mode == 1 ? 'Edit Your Post':'Create Awesome POST !' }} </h4>
+
+<div class="md:flex  mb-4">
+    <div class="w-full md:w-3/4  ">
+    <div class="post-content border">
+        <div class="post-content_type p-3 bg-gray-100 border-b">
+            <button (click)="changePostType('IMAGE')" [class.bg-gray-300]="isActiveType('IMAGE')" class=" hover:bg-gray-400 text-gray-800 font-bold py-1 px-2 mr-1  rounded outline-none"><i class="la la-image"></i></button>
+            <button (click)="changePostType('VIDEO')" [class.bg-gray-300]="isActiveType('VIDEO')" class=" hover:bg-gray-400 text-gray-800 font-bold py-1 px-2 mr-1  rounded outline-none"><i class="la la-film"></i></button>
+            <button (click)="changePostType('STICKER')" [class.bg-gray-300]="isActiveType('STICKER')" class=" hover:bg-gray-400 text-gray-800 font-bold py-1 px-2 mr-1  rounded outline-none"><i class="la la-meh-o"></i></button>
+            <button (click)="changePostType('COUPON')" [class.bg-gray-300]="isActiveType('COUPON')" class=" hover:bg-gray-400 text-gray-800 font-bold py-1 px-2 mr-1  rounded outline-none"><i class="la la-meh-o"></i></button>
+            <button (click)="changePostType('LINK')" [class.bg-gray-300]="isActiveType('LINK')" class=" hover:bg-gray-400 text-gray-800 font-bold py-1 px-2 mr-1  rounded outline-none"><i class="la la-meh-o"></i></button>
+            <button (click)="changePostType('SURVEY')" [class.bg-gray-300]="isActiveType('SURVEY')" class=" hover:bg-gray-400 text-gray-800 font-bold py-1 px-2 mr-1  rounded outline-none"><i class="la la-meh-o"></i></button>
+        </div>
+        <div class="post-content_body p-3" [ngSwitch]="selectedPostType">
+            <div *ngSwitchCase="'IMAGE'"> <app-add-photo [selectedImages]="postTimeline?.images" (editImage)="imagesChange($event)"></app-add-photo> </div>
+            <div *ngSwitchCase="'VIDEO'">Insert video. Not implement yet...</div>
+            <div *ngSwitchCase="'STICKER'">Insert Sticker. Not implement yet... </div>
+            <div *ngSwitchCase="'COUPON'">Insert Coupon. Not implement yet... </div>
+            <div *ngSwitchCase="'LINK'">Insert Link. Not implement yet...  </div>
+            <div *ngSwitchCase="'SURVEY'">Insert Survey. Not implement yet...</div>
+        </div>
+    </div>    
+    </div>
+    <div class="w-full md:w-1/4  ">
+        <div class="option-publish p-2">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
+                Puslish Date
+            </label>
+            <div class="option-publish_now ">
+                <input id="rdnow" type="radio" [value]="0" name="opt-publish" [(ngModel)]="postOption" [checked]='true'> <label class="px-2" for="rdnow">Publish Now</label>
+            </div>
+            <div class="option-publish_schedule  ">
+                <input id="rdschedule" type="radio" [value]="1" name="opt-publish" [(ngModel)]="postOption">  <label class="px-2" for="rdschedule">Set schedule</label>
+                <div class="time-setting" *ngIf="postOption == 1">
+                        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 my-1 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" placeholder="Date Time:"
+                        [(ngModel)]="scheduleTime"
+                        [owlDateTimeTrigger]="dt" [owlDateTime]="dt">
+                 <owl-date-time #dt></owl-date-time>
+                </div>
+
+                {{scheduleTime}}
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+<div class="flex mb-4 justify-between">
+    <button *ngIf="mode == 1" class="bg-gray-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" (click)="editPost()">
+        Save
+    </button>
+    <button *ngIf="mode == 0" class="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" (click)="createPost()">
+        {{postOption == 1 ? 'Schedule': 'Submit' }}
+    </button>
+</div>
+
+<p> This will be sent as a payload data</p>
+<pre>{{payloadData | json}}</pre>
